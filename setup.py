@@ -5,4 +5,4 @@ setup(name='tlo-bill-parser',
       description='TLO Crawler and Parser',
       author='Kevin Turner',
       author_email='kevinturner@utexas.edu',
-      install_requires=['requests'])
+      install_requires=['requests', 'html2text'])

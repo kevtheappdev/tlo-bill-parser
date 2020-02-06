@@ -1,5 +1,5 @@
 import requests
-from typing import IO, List
+from html2text import HTML2Text
 
 
 class BILLTYPES:
@@ -12,7 +12,7 @@ class URLSTRINGS:
                 'HB{bill_num}{bill_type}.htm'
 
 
-def house_bill_text(legis_session: int, bill_num: str, bill_type: BILLTYPES) -> str:
+def house_bill_text(legis_session: int, bill_num: str, bill_type: str) -> str:
     """
     :param legis_session:
     :param bill_num:
@@ -23,10 +23,12 @@ def house_bill_text(legis_session: int, bill_num: str, bill_type: BILLTYPES) -> 
     bill_url = URLSTRINGS.BILL_TEXT.format(legis_session=legis_session, bill_num=bill_num, bill_type=bill_type)
     bill_request = requests.get(bill_url)
 
-    if bill_request.status_code == 200:
-        return bill_request.text
-    else:
-        pass
+    # strip out text from html
+    h = HTML2Text()
+    text = bill_request.text
+    h.ignore_links = True
+    result = h.handle(text)
+    return result
 
 
-print(house_bill_text(86, '00002', BILLTYPES.HOUSE_COMMITTEE_REPORT))
+print(house_bill_text(86, '00002', BILLTYPES.HOUSE_COMMITTEE_REPORT)) # pad bill number to 5-digits
