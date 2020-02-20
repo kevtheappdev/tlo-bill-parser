@@ -1,6 +1,6 @@
 import requests
 from html2text import HTML2Text
-
+import os
 
 class BILLTYPES:
     INTRODUCED = 'I'
@@ -31,4 +31,8 @@ def house_bill_text(legis_session: int, bill_num: str, bill_type: str) -> str:
     return result
 
 
-print(house_bill_text(86, '00002', BILLTYPES.HOUSE_COMMITTEE_REPORT)) # pad bill number to 5-digits
+# for i in range(1, 7315):
+#     num = str(i).zfill(5)
+#     fileName = 'bill-texts/HB{num}{type}.txt'.format(num=num, type=BILLTYPES.INTRODUCED)
+#     file = open(fileName, 'w')
+#     file.write(house_bill_text(86, str(i).zfill(5), BILLTYPES.INTRODUCED)) # pad bill number to 5-digits
